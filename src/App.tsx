@@ -15,10 +15,10 @@ const roles = [
 ];
 
 const projects = [
-  { no: '01', title: 'HCP Network Intelligence', kind: 'NETWORK SCIENCE / HEALTHCARE', story: 'What if a representative’s existing relationships could help them discover new connections? An exploration of HCP and KOL networks, centrality and relationship-based outreach.', tags: 'Graph thinking · Pharma · Network centrality' },
-  { no: '02', title: 'A smarter cradle', kind: 'HARDWARE / IOT', story: 'A connected cradle prototype bringing sensors, Raspberry Pi, ESP32, MQTT and a database together—with a focus on making storage and monitoring more efficient.', tags: 'Raspberry Pi · ESP32 · MQTT · Sensors' },
-  { no: '03', title: 'Clarity OS', kind: 'PRODUCT EXPERIMENT', story: 'A student-focused idea: make the university and course search feel less scattered by bringing research, comparisons and AI-assisted discovery into one place.', tags: 'Supabase · APIs · AI research' },
-  { no: '04', title: 'Thirdwheel', kind: 'BUILDING IN PUBLIC / WEB', story: 'A chat app that became a lesson in product decisions. UI, Firebase, messaging reliability, privacy, safety and the details that make software feel trustworthy.', tags: 'React · Firebase · Product design' },
+  { no: '01', title: 'HCP Network Intelligence', kind: 'NETWORK SCIENCE / HEALTHCARE', story: 'What if a representative’s existing relationships could help them discover new connections? A graph-based approach to pharma field engagement: using existing HCP and KOL relationships, network centrality and connection patterns to surface possible introductions and new outreach paths.', tags: 'Graph thinking · Pharma · Network centrality' },
+  { no: '02', title: 'A smarter cradle', kind: 'HARDWARE / IOT', story: 'A hardware prototype combining Raspberry Pi, ESP32, sensors, MQTT and a database. It explored connected monitoring and improved storage efficiency by around 20%.', tags: 'Raspberry Pi · ESP32 · MQTT · Sensors' },
+  { no: '03', title: 'Clarity OS', kind: 'PRODUCT EXPERIMENT', story: 'A student decision-support product for university and course discovery. I brought together Supabase, search, web extraction and LLM-based synthesis to turn scattered information into a more useful comparison workflow.', tags: 'Supabase · APIs · AI research' },
+  { no: '04', title: 'Thirdwheel', kind: 'BUILDING IN PUBLIC / WEB', story: 'A college chat-app project that grew into a serious product experiment: redesigning the interface, working with Firebase, improving messaging reliability and thinking through privacy, moderation and account safety.', tags: 'React · Firebase · Product design' },
 ];
 
 const interests = [
@@ -41,6 +41,7 @@ export default function App() {
         <nav className={open ? 'links show' : 'links'}>
           <a href="#story" onClick={() => setOpen(false)}>Story</a>
           <a href="#work" onClick={() => setOpen(false)}>Work</a>
+          <a href="#capabilities" onClick={() => setOpen(false)}>What I do</a>
           <a href="#notes" onClick={() => setOpen(false)}>Notes</a>
           <a href="#life" onClick={() => setOpen(false)}>Life</a>
         </nav>
@@ -52,7 +53,7 @@ export default function App() {
         <div className="opening-copy">
           <p className="eyebrow"><span className="dot"/> NEW DELHI, INDIA &nbsp;·&nbsp; 28°38′N</p>
           <h1>Hello, I’m Tarun.<br/><em>Still figuring<br/>things out.</em></h1>
-          <p className="intro">I work with data and technology. I read about history, people and the world. I build things, ask too many questions, and try to stay curious about what’s around the corner.</p>
+          <p className="intro">I’m an analyst by profession, a curious generalist by nature. I work across data, technology and problem-solving—and outside the laptop, I’m usually reading, following a sport, planning a trip or chasing some new question.</p>
           <a className="down-link" href="#story">A little about me <ArrowDown size={15}/></a>
           <div className="hand-note">a work in progress, like most of us ↗</div>
         </div>
@@ -70,8 +71,10 @@ export default function App() {
           <h2>Work is part<br/>of my story.<br/><i>Not all of it.</i></h2>
           <div className="story-body">
             <p>I studied computer applications, learning the fundamentals of programming, databases, systems and AI. That took me into analytics, consulting and data work—often around healthcare, information and the systems that quietly keep organisations moving.</p>
-            <p>Somewhere along the way, I realised I enjoy the questions behind the work as much as the work itself: why does a system behave this way? Who does it help? What does it miss? Could we build it differently?</p>
-            <p>That curiosity wanders. Sometimes into research, sometimes into history or public policy, sometimes into a side project I probably should have planned better.</p>
+            <p>I can work with messy data, build and maintain data workflows, investigate problems using SQL and Python, make analysis understandable through dashboards, and navigate the platforms that connect business systems. I enjoy understanding how the pieces fit—not just finishing the ticket.
+
+I’ve worked with healthcare and pharma data, built network-based ideas for discovering relationships between healthcare professionals, supported enterprise integrations and security models, and explored products of my own. I’m still expanding my depth, but I’m comfortable learning a new system and getting my hands dirty.</p>
+            <p>That curiosity wanders. It also means my interests refuse to stay tidy: AI and network science one week, ancient history or public policy the next, then a side project that starts with an innocent question and gets out of hand.</p>
             <div className="signature-line">— a short version of a long story</div>
           </div>
         </div>
@@ -90,21 +93,32 @@ export default function App() {
         </div>
       </section>
 
+      <section className="capabilities-section" id="capabilities">
+        <div className="section-label"><span>03</span> WHAT I BRING TO THE TABLE</div>
+        <div className="capability-intro"><h2>Things I know how to do.<br/><em>Things I’m still learning.</em></h2><p>Not a keyword dump. These are the tools, approaches and problem spaces I’ve actually spent time with—professionally, academically or by building things myself.</p></div>
+        <div className="capability-grid">
+          <article className="capability capability-data"><span>01 / DATA & ANALYTICS</span><h3>Make sense<br/>of the data.</h3><p>Explore, clean, transform, query and analyse data. Find patterns and turn them into something people can make decisions with.</p><div className="capability-tools">Python · Pandas · NumPy · SQL · Excel · Power BI · DAX · Tableau</div></article>
+          <article className="capability capability-engineering"><span>02 / DATA ENGINEERING</span><h3>Make the pipeline<br/>work end-to-end.</h3><p>ETL workflows, data integrations, troubleshooting, automation and working across source systems, warehouses and downstream consumers.</p><div className="capability-tools">Snowflake · Azure · ADF · Databricks · IICS · AWS S3 · Git</div></article>
+          <article className="capability capability-ai"><span>03 / AI & MACHINE LEARNING</span><h3>Experiment with<br/>intelligence.</h3><p>Feature engineering, model evaluation, regression, classification, clustering, forecasting, NLP—and understanding model behaviour rather than treating it as magic.</p><div className="capability-tools">Scikit-learn · SHAP · NLP · XAI · Forecasting</div></article>
+          <article className="capability capability-product"><span>04 / PRODUCT & BUILDING</span><h3>Take an idea<br/>past the sketch.</h3><p>Prototype, shape a user flow, work with APIs and databases, iterate on interfaces and connect a technical idea to a real user problem.</p><div className="capability-tools">React · TypeScript · Supabase · Firebase · REST APIs</div></article>
+        </div>
+        <div className="capability-footnote">My strongest work lives at the intersection of data, systems, people and the questions worth asking.</div>
+      </section>
       <section className="career-section" id="resume">
-        <div className="section-label"><span>03</span> THE PROFESSIONAL CHAPTER</div>
+        <div className="section-label"><span>04</span> THE PROFESSIONAL CHAPTER</div>
         <div className="career-heading"><h2>Places I’ve<br/>learned things.</h2><p>Three roles so far, each in a different chapter. This is the resume part—without making you read it like a resume.</p></div>
         <div className="career-list">{roles.map((r, i) => <Fade delay={i * .04} key={r.company}><article className="career-row"><span className="career-date">{r.dates}</span><div><h3>{r.company}</h3><b>{r.role}</b><p>{r.note}</p></div><span className="career-index">0{i + 1}</span></article></Fade>)}</div>
         <div className="resume-strip"><span>THE PRACTICAL DETAILS</span><p>Python · SQL · Data pipelines · Analytics · Snowflake · Visier · Azure · Databricks · Power BI</p><a href="mailto:taruntiwari1009@gmail.com?subject=Request%20for%20CV">Ask me for my CV <ArrowUpRight size={14}/></a></div>
       </section>
 
       <section className="research-section" id="notes">
-        <div className="section-label"><span>04</span> THINGS I KEEP WONDERING ABOUT</div>
+        <div className="section-label"><span>05</span> THINGS I KEEP WONDERING ABOUT</div>
         <div className="research-layout"><div><h2>The rabbit holes<br/>are part of it.</h2><p>Curiosity doesn't stay in one lane. These are the questions I keep coming back to, reading about, and would love to explore more seriously.</p><div className="note-doodle">why though?</div></div><div className="notes-list">{notes.map((n,i)=><div key={n}><span>0{i+1}</span><b>{n}</b><Sparkles size={14}/></div>)}</div></div>
         <div className="reading-card"><BookOpen size={18}/><span>On the reading pile: AI, networks, history, behaviour, society.</span><span className="reading-aside">the pile is never getting smaller</span></div>
       </section>
 
       <section className="life-section" id="life">
-        <div className="section-label"><span>05</span> OUTSIDE THE TAB</div>
+        <div className="section-label"><span>06</span> OUTSIDE THE TAB</div>
         <div className="life-heading"><h2>The other tabs<br/>in my brain.</h2><p>Not side quests, really. Just life. Things I care about that don't need to become productive.</p></div>
         <div className="life-grid">{interests.map((it,i)=><article className={'life-item life-'+i} key={it.label}><span>{it.label}</span><h3>{it.title}</h3><p>{it.text}</p><small>✳</small></article>)}</div>
         <div className="life-bottom-note">If there’s a good book, a green place, a game, or a new road—I’m probably interested.</div>
