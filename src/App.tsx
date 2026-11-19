@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ArrowDown, ArrowUpRight, BookOpen, Github, Menu, X, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const Fade = ({ children, delay = 0 }) => (
+const Fade = ({ children, delay = 0 }: { children: ReactNode; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-35px' }} transition={{ duration: .5, delay }}>
     {children}
   </motion.div>
