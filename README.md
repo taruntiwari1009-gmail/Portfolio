@@ -1,12 +1,8 @@
-# Tarun Tiwari — Data & Analytics Engineer Portfolio
+# Tarun Tiwari — Personal Portfolio
 
-Responsive professional portfolio highlighting data engineering, analytics, enterprise BI, workforce intelligence, governance and HR technology.
+A premium editorial-style portfolio focused on data, technology, research and personal projects.
 
-## Education
-- MCA — Indian Institute of Technology Patna (currently pursuing)
-- BCA — Vivekananda Institute of Professional Studies (VIPS), GGSIPU, Delhi (2020–2023)
-
-## Local run
+## Local development
 ```bash
 npm install
 npm run dev
@@ -18,6 +14,6 @@ npm run build
 npm run preview
 ```
 
-Stack: React, TypeScript, Vite, Framer Motion, Lucide and custom CSS.
+Stack: React, TypeScript, Vite, Framer Motion and Lucide.
 
-Before publishing, validate all portfolio metrics and factual claims against approved source material. Resume is not linked until a PDF is added. Case-study narratives are intentionally public-safe and do not expose confidential client details. LinkedIn is omitted until the correct profile URL is supplied.
+This redesign removes unverified portfolio metric claims and emphasizes project descriptions, experience, interests and research themes.
