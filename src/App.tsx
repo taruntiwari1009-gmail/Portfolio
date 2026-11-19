@@ -40,7 +40,20 @@ export default function App(){
     </div>
    </header>
    <section className="world" id="home">
-    <div className="starfield">{stars.map((star,index)=><i key={index} style={{left:star.left+'%',top:star.top+'%',animationDelay:star.delay+'s',width:star.size,height:star.size}/>)}</div>
+    <div className="starfield">
+     {stars.map((star, index) => (
+      <i
+       key={index}
+       style={{
+        left: star.left + '%',
+        top: star.top + '%',
+        animationDelay: star.delay + 's',
+        width: star.size,
+        height: star.size
+       }}
+      />
+     ))}
+    </div>
     <div className="world-intro">
      <p className="overline">A SMALL PLACE ON THE INTERNET</p>
      <h1>Hello, I'm Tarun.<br/><em>Welcome to my world.</em></h1>
