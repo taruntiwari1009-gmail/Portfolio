@@ -1,136 +1,75 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Moon, Sun, Compass, X, Shuffle, Github, Mail } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Compass, Github, Mail, Moon, Search, Sun, X, Sparkles, ExternalLink, Heart, Code2, BriefcaseBusiness, Leaf, Music2 } from 'lucide-react';
 
-const places = [
- {id:'room',symbol:'⌂',name:'My little room',hint:'things I make',title:'A desk full of unfinished things.',text:'I work around data, technology and the systems people depend on. I like pulling apart complicated things until they make a little more sense.',items:['HCP Network Intelligence — finding meaningful connections in healthcare networks','Clarity OS — making university decisions feel less overwhelming','Thirdwheel — a chat app, and a lesson in building things people can trust','A connected cradle — hardware, sensors, and a surprisingly satisfying 20% improvement']},
- {id:'library',symbol:'▤',name:'The library',hint:'things I wonder about',title:'I have a weakness for rabbit holes.',text:'A question rarely stays a question for long. It grows legs, opens tabs, and suddenly it is midnight.',items:['Explainable AI & bias','Network science','History & public policy','How people, institutions and technology shape one another']},
- {id:'garden',symbol:'❋',name:'The garden',hint:'life outside screens',title:'More trees. More unplanned afternoons.',text:'Reading, travelling, volunteering, wandering, watching sport, collecting songs and having conversations that go somewhere unexpected.',items:['Books & Date with an Author','Chai & Chapters','Cricket, football, chess, badminton & racing','Volunteering and event chaos','Roads, mountains, greenery']},
- {id:'night',symbol:'☾',name:'After hours',hint:'the soundtrack',title:'The playlist has no genre discipline.',text:'Haryanvi to Punjabi, Bollywood to pop and hip-hop. Some songs are just little time machines.',items:['Haryanvi & Punjabi','Bollywood','Enrique, Rihanna, Maroon 5','Eminem, One Direction—and whatever comes next']},
- {id:'work',symbol:'↗',name:'A timeline',hint:'where I have been',title:'The work-shaped part of the story.',text:'A few years spent learning how data, teams, healthcare and large systems fit together.',items:['Sanofi · Visier Functional Expert Lead · 2026—','Deloitte Consulting · Associate Analyst · 2024—2026','ProcDNA Analytics · Associate Analyst · 2023—2024','BCA · 2023 · Delhi']}
+type Project = { id: string; title: string; kind: string; year: string; status: string; intro: string; story: string; stack: string[]; lesson: string };
+const projects: Project[] = [
+ {id:'network',title:'HCP Network Intelligence',kind:'Healthcare · Network science',year:'Work',status:'Built at work',intro:'A network-based way to help medical representatives find meaningful paths to new healthcare professionals.',story:'The idea was to look beyond isolated lists and make existing relationships useful. By modelling connections between HCPs and KOLs, network centrality can help reveal useful bridges and routes for outreach. This is a work project; details are intentionally kept high-level.',stack:['Network analysis','Centrality','Healthcare data'],lesson:'Sometimes the most valuable signal is not a person—it is the connection between people.'},
+ {id:'clarity',title:'Clarity OS',kind:'Product experiment · Education',year:'Independent',status:'Experiment',intro:'A decision-support idea for students navigating universities, courses and an overwhelming amount of information.',story:'Clarity OS is an attempt to make choosing what to study feel less scattered. It brings discovery and research into one place, helping students compare options and make a more informed decision.',stack:['Supabase','Serper','Firecrawl','OpenRouter'],lesson:'Good tools do not make decisions for people. They make the decision easier to understand.'},
+ {id:'thirdwheel',title:'Thirdwheel',kind:'Product · Messaging',year:'Independent',status:'In progress',intro:'A chat application—and a continuing lesson in the quiet complexity of making software people can trust.',story:'Thirdwheel grew from a college web-app idea into a more deliberate messaging product. The work includes interface redesign, Firebase-backed messaging, discovery, privacy and safety, settings, moderation, account deletion, accessibility and production-readiness. It is developed with a PR-based workflow and careful release gates.',stack:['React','Firebase','GitHub PR workflow','UX & accessibility'],lesson:'The edge cases are part of the product. Reliability is a feature users feel.'},
+ {id:'cradle',title:'Smart cradle',kind:'Hardware · IoT',year:'College project',status:'Built',intro:'A connected cradle experiment combining sensors, microcontrollers and a small data pipeline.',story:'Built around Raspberry Pi, ESP32, sensors, MQTT and a database. The project explored how sensing and connected systems could improve the cradle workflow. The reported storage reduction was around 20%.',stack:['Raspberry Pi','ESP32','Sensors','MQTT','Database'],lesson:'Hardware and software become interesting when they have to work together in the real world.'},
+ {id:'etl',title:'Pipeline automation',kind:'Data engineering · Pharma',year:'Work',status:'Built at work',intro:'Taking a manual data pipeline and making it more repeatable through cloud-based integration.',story:'A pharma client workflow involved automating manual pipeline steps using cloud-based IICS. This story is kept generic to protect client and employer information.',stack:['IICS','ETL','Cloud data workflows'],lesson:'Automation is not just fewer clicks—it is consistency, observability and a process people can rely on.'}
 ];
-const thoughts=['Somewhere, a book is quietly waiting to change your mind.','Not every detour is wasted time.','Build something small. Let it surprise you.','The world is bigger than your current browser tabs.','Go outside. Your ideas can come with you.','You are allowed to be a beginner more than once.','Make room for the things you haven’t discovered yet.'];
-const stars=Array.from({length:34},(_,i)=>({left:(i*37+7)%100,top:(i*53+11)%90,delay:(i%7)*.35,size:i%3===0?3:2}));
+const chapters = [
+ {n:'01',title:'The person behind the tabs',tag:'A little introduction',text:'I have never been particularly good at being just one thing. Technology, books, history, people, ideas and building things all seem to find their way into the same week. This site is a collection of those threads—not a definitive biography, just a snapshot of a person in progress.'},
+ {n:'02',title:'Curiosity has a habit of wandering',tag:'Things I keep returning to',text:'Explainable AI, bias, network science, history, public policy, machine learning and the ways technology changes the world around us. I enjoy the question before I know where it will lead.'},
+ {n:'03',title:'Making things, learning things',tag:'Projects & experiments',text:'Some ideas become working software. Some become prototypes. Some teach me exactly why the next attempt needs to be better. The interesting part is usually somewhere in the process.'},
+ {n:'04',title:'The chapters so far',tag:'Education & work',text:'A BCA, a few years in analytics and consulting, and work around data, healthcare and enterprise systems. Each role has made the picture a little clearer—and introduced entirely new questions.'},
+ {n:'05',title:'Outside the screen',tag:'Life in the margins',text:'Books, green places, road trips, volunteering, sports, music and conversations that go on longer than planned. The offline parts of life are not the extras; they are the point.'},
+ {n:'06',title:'Still becoming',tag:'What comes next',text:'I am still learning how to research well, build responsibly, ask better questions and make things that matter. There is plenty I have not figured out yet, which is a reassuring amount of room to grow.'}
+];
+const timeline = [
+ {date:'2023',name:'BCA · GGSIPU',detail:'Graduated with an 8.6 CGPA. Studied computer science fundamentals, programming, databases, AI and related subjects.'},
+ {date:'Jul 2023 — Feb 2024',name:'ProcDNA Analytics',detail:'Associate Analyst · Early experience working with data, analytics and healthcare-related workflows.'},
+ {date:'Feb 2024 — Jan 2026',name:'Deloitte Consulting India',detail:'Associate Analyst · Consulting experience across data and technology workflows.'},
+ {date:'Mar 2026 — now',name:'Sanofi · via ManpowerGroup',detail:'Visier Functional Expert Lead · Supporting Visier security, integrations, role/group reviews, remediation, go-live and hypercare.'}
+];
+const interests = [
+ {icon:BookOpen,title:'Books & words',text:'Reading, writing, history, book notes and the occasional rabbit hole.'},
+ {icon:Leaf,title:'Green places',text:'Trees, gardens, mountains, unplanned walks and getting outside.'},
+ {icon:Compass,title:'Travel & detours',text:'Exploring places, collecting small observations and planning the next escape.'},
+ {icon:Heart,title:'People & volunteering',text:'Helping at events, meeting strangers and being part of something happening.'},
+ {icon:Music2,title:'A very mixed playlist',text:'Haryanvi, Punjabi, Bollywood, pop and hip-hop—depending on the day.'},
+ {icon:Sparkles,title:'Sports & play',text:'Cricket, football, chess, badminton, racing, running and mobile games.'}
+];
+const notes = ['A good question is a perfectly reasonable reason to lose an afternoon.','Some things make more sense after a walk.','Being interested in many things is not the same as being lost.','Build the small version. Learn what it is trying to tell you.','Leave a little room for surprise.'];
+const links = [{label:'Home',href:'#home'},{label:'Stories',href:'#chapters'},{label:'Projects',href:'#projects'},{label:'Timeline',href:'#timeline'},{label:'Outside',href:'#outside'},{label:'Notes',href:'#notes'}];
 
 export default function App(){
- const [active,setActive]=useState<string|null>(null);
- const [night,setNight]=useState(false);
- const [note,setNote]=useState(thoughts[0]);
- const [wander,setWander]=useState(0);
- const chosen=places.find(place=>place.id===active);
- const explore=()=>{
-   const ids=places.map(place=>place.id);
-   let next=Math.floor(Math.random()*ids.length);
-   if(ids[next]===active) next=(next+1)%ids.length;
-   setWander(value=>value+1);
-   setActive(ids[next]);
- };
- const shuffleThought=()=>{
-   let next=thoughts[Math.floor(Math.random()*thoughts.length)];
-   if(next===note) next=thoughts[(thoughts.indexOf(next)+1)%thoughts.length];
-   setNote(next);
- };
- return (
-  <main className={night?'universe night':'universe'}>
-   <header className="un-nav">
-    <a href="#home" className="wordmark">tarun <span>somewhere on the internet</span></a>
-    <div className="nav-right">
-     <span className="location-tag">DELHI · PLANET EARTH</span>
-     <button className="moon-toggle" onClick={()=>setNight(value=>!value)} aria-label="Toggle day and night">{night?<Sun/>:<Moon/>}</button>
-    </div>
-   </header>
-   <section className="world" id="home">
-    <div className="starfield">
-     {stars.map((star, index) => (
-      <i
-       key={index}
-       style={{
-        left: star.left + '%',
-        top: star.top + '%',
-        animationDelay: star.delay + 's',
-        width: star.size,
-        height: star.size
-       }}
-      />
-     ))}
-    </div>
-    <div className="world-intro">
-     <p className="overline">A SMALL PLACE ON THE INTERNET</p>
-     <h1>Hello, I'm Tarun.<br/><em>Welcome to my world.</em></h1>
-     <p className="intro-text">A collection of work, wonder, half-formed ideas, favourite things and little corners of life. Nothing here is in a hurry.</p>
-     <div className="hint"><span className="pulse"/> Try clicking around. There are things to find.</div>
-    </div>
-    <div className="planetarium" aria-label="Interactive illustrated world">
-     <div className="sun-or-moon"/>
-     <div className="orbit orbit-a"/>
-     <div className="orbit orbit-b"/>
-     <div className="planet planet-one"/>
-     <div className="planet planet-two"/>
-     <div className="world-hill hill-back"/>
-     <div className="world-hill hill-mid"/>
-     <div className="world-hill hill-front"/>
-     <div className="little-house">
-      <div className="roof"/>
-      <div className="house-body"><div className="window"/><div className="door"/></div>
-     </div>
-     <div className="tree tree-one"><b/><i/><i/></div>
-     <div className="tree tree-two"><b/><i/><i/></div>
-     <div className="pathway"/>
-     <div className="world-label">somewhere between<br/>curiosity &amp; calm</div>
-     {places.map(place=>(
-      <button key={place.id} className={'portal portal-'+place.id} onClick={()=>setActive(place.id)}>
-       <span className="portal-icon">{place.symbol}</span><span className="portal-name">{place.name}</span><small>{place.hint}</small>
-      </button>
-     ))}
-     <motion.div className="floating-paper" animate={{y:[0,-8,0],rotate:[3,5,3]}} transition={{duration:5,repeat:Infinity,ease:'easeInOut'}}>
-      <span>NOTE / {String(wander+1).padStart(2,'0')}</span>
-      <p>{note}</p>
-      <button onClick={shuffleThought}><Shuffle size={13}/> shuffle thought</button>
-     </motion.div>
-    </div>
-    <div className="world-foot">
-     <span>✳ MADE OF MANY CURIOSITIES</span>
-     <button onClick={explore}><Compass size={15}/> Take a random path</button>
-     <span>SCROLL A LITTLE ↓</span>
-    </div>
-   </section>
-   <section className="what-is-this">
-    <p className="section-kicker">A NOTE BEFORE YOU WANDER</p>
-    <h2>I'm not one thing.<br/><i>And that's kind of the point.</i></h2>
-    <p>Data &amp; technology are part of my days. Books, history, music, sport, travel, people and questions fill the rest. This is less a biography and more a small map of the things that make me curious.</p>
-    <div className="little-facts"><span>01 — BCA, 2023</span><span>02 — Delhi, India</span><span>03 — Always becoming</span></div>
-   </section>
-   <section className="wander-more">
-    <p className="section-kicker">IF YOU'RE STILL HERE</p>
-    <h2>Choose your own<br/><i>little adventure.</i></h2>
-    <div className="destination-row">{places.map(place=><button key={place.id} onClick={()=>setActive(place.id)}><span>{place.symbol}</span>{place.name}<ArrowUpRight size={14}/></button>)}</div>
-   </section>
-   <footer className="un-footer">
-    <div className="footer-spark">✳</div>
-    <h2>Anyway, that's me.<br/><i>For now.</i></h2>
-    <p>Have a book to recommend, a rabbit hole to share, or just feel like saying hello?</p>
-    <a href="mailto:taruntiwari1009@gmail.com" className="hello-link"><Mail size={16}/> Write me a little note <ArrowUpRight size={15}/></a>
-    <div className="footer-links">
-     <a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer"><Github size={15}/> GitHub</a>
-     <span>MADE WITH CURIOSITY, IN DELHI</span>
-     <button onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}>Back to orbit ↑</button>
-    </div>
-   </footer>
-   <AnimatePresence>
-    {chosen&&(
-     <motion.div className="portal-overlay" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setActive(null)}>
-      <motion.article className="portal-window" initial={{y:35,scale:.97}} animate={{y:0,scale:1}} exit={{y:20,scale:.97}} onClick={event=>event.stopPropagation()}>
-       <button className="window-close" onClick={()=>setActive(null)} aria-label="Close"><X/></button>
-       <span className="window-symbol">{chosen.symbol}</span>
-       <p className="section-kicker">{chosen.name} / TARUN'S WORLD</p>
-       <h2>{chosen.title}</h2>
-       <p className="window-text">{chosen.text}</p>
-       <ul>{chosen.items.map(item=><li key={item}>{item}</li>)}</ul>
-       <button className="window-wander" onClick={explore}><Compass size={15}/> Another path <ArrowUpRight size={14}/></button>
-      </motion.article>
-     </motion.div>
-    )}
-   </AnimatePresence>
-  </main>
- );
+ const [theme,setTheme]=useState<'light'|'dark'>('light');
+ const [selected,setSelected]=useState<Project|null>(null);
+ const [searchOpen,setSearchOpen]=useState(false);
+ const [search,setSearch]=useState('');
+ const [randomNote,setRandomNote]=useState(notes[0]);
+ const [wander,setWander]=useState('');
+ const [saved,setSaved]=useState<string[]>([]);
+ const [textSize,setTextSize]=useState(0);
+ const allSearchItems=useMemo(()=>[...chapters.map(c=>({title:c.title,description:c.text,href:'#chapters'})),...projects.map(p=>({title:p.title,description:p.intro,href:'#projects'})),...interests.map(i=>({title:i.title,description:i.text,href:'#outside'}))],[]);
+ const matches=allSearchItems.filter(item=>(item.title+' '+item.description).toLowerCase().includes(search.toLowerCase()));
+ const randomExplore=()=>{const pool=['#chapters','#projects','#timeline','#outside','#notes'];let next=pool[Math.floor(Math.random()*pool.length)];if(next===wander)next=pool[(pool.indexOf(next)+1)%pool.length];setWander(next);document.querySelector(next)?.scrollIntoView({behavior:'smooth'});};
+ const toggleSave=(id:string)=>setSaved(prev=>prev.includes(id)?prev.filter(x=>x!==id):[...prev,id]);
+ return <main className={theme==='dark'?'site dark':'site'} style={{'--text-scale':1+textSize*.06} as React.CSSProperties}>
+  <header className="topbar">
+   <a className="brand" href="#home"><span className="brand-mark">t.</span><span>Tarun Tiwari<small>A LIFE IN PROGRESS</small></span></a>
+   <nav className="navlinks">{links.map(l=><a key={l.href} href={l.href}>{l.label}</a>)}</nav>
+   <div className="top-actions"><button className="icon-btn" aria-label="Search this site" onClick={()=>setSearchOpen(true)}><Search/></button><button className="icon-btn" aria-label="Toggle theme" onClick={()=>setTheme(t=>t==='light'?'dark':'light')}>{theme==='light'?<Moon/>:<Sun/>}</button></div>
+  </header>
+  <section className="hero" id="home">
+   <div className="hero-left"><span className="eyebrow"><span className="status-dot"/> PERSONAL ARCHIVE · DELHI, INDIA</span><h1>A life<br/><em>in progress.</em></h1><p className="hero-copy">I have never been particularly good at being just one thing.</p><p className="hero-sub">Technology, books, history, people, ideas, and building things that sometimes work exactly as planned. I'm Tarun. This is a little collection of the things that make me, well, me.</p>
+    <div className="hero-actions"><a className="primary-btn" href="#chapters">Get to know me <ArrowRight/></a><button className="quiet-btn" onClick={randomExplore}><Compass/> Take a random detour</button></div>
+   </div>
+   <div className="hero-art" aria-label="Abstract illustration of a journal, leafy branch and moon"><div className="art-sun"/><div className="art-circle circle-a"/><div className="art-circle circle-b"/><div className="art-leaf leaf-a"/><div className="art-leaf leaf-b"/><div className="art-leaf leaf-c"/><div className="art-book"><span>FIELD NOTES</span><strong>the curious<br/>life</strong><i>VOL. 01 · OPEN ENDED</i></div><div className="art-label label-one">always learning ↗</div><div className="art-label label-two">keep wandering</div></div>
+   <div className="hero-bottom"><span>NOT A CV. NOT QUITE A BLOG.</span><span>JUST A HUMAN, IN MANY CHAPTERS ↓</span></div>
+  </section>
+  <section className="intro-band"><div className="intro-ornament">✳</div><p>Some of it makes sense.<br/><em>Some of it is still becoming.</em></p><span className="intro-small">A place to read, explore, and get a slightly better picture.</span></section>
+  <section className="chapters-section section-wrap" id="chapters"><div className="section-heading"><div><span className="eyebrow">THE BOOK, SO FAR</span><h2>Choose a chapter.</h2></div><p>Start anywhere. There is no order to keep.</p></div><div className="chapter-grid">{chapters.map(ch=><a className="chapter-item" key={ch.n} href={ch.n==='03'?'#projects':ch.n==='04'?'#timeline':ch.n==='05'?'#outside':ch.n==='06'?'#notes':'#chapters'}><span className="chapter-number">{ch.n}</span><div><span className="chapter-tag">{ch.tag}</span><h3>{ch.title}</h3><p>{ch.text}</p><span className="chapter-link">Read this chapter <ArrowUpRight/></span></div></a>)}</div></section>
+  <section className="projects-section" id="projects"><div className="section-wrap"><div className="section-heading"><div><span className="eyebrow">THE WORKBENCH</span><h2>Things I've made<br/><em>and learned from.</em></h2></div><p>Projects are more than finished screens. Here are the ideas, the decisions, the messy middle and what each one taught me.</p></div><div className="project-list">{projects.map((p,i)=><article className="project-row" key={p.id}><div className="project-number">0{i+1}</div><div className="project-main"><span className="project-meta">{p.kind} · {p.year}</span><h3>{p.title}</h3><p>{p.intro}</p><div className="tag-row">{p.stack.slice(0,4).map(tag=><span key={tag}>{tag}</span>)}</div></div><div className="project-side"><span className="project-status">{p.status}</span><button onClick={()=>setSelected(p)} className="text-link">Explore project <ArrowUpRight/></button></div></article>)}</div><div className="projects-footnote">More experiments will find their way here. Not every idea needs to become a product.</div></div></section>
+  <section className="timeline-section section-wrap" id="timeline"><div className="section-heading"><div><span className="eyebrow">THE CHAPTERS SO FAR</span><h2>Where the story<br/><em>has taken me.</em></h2></div><p>Education, work and the experiences that have shaped the way I think about data, technology and people.</p></div><div className="timeline">{timeline.map((t,i)=><div className="timeline-item" key={t.date}><span className="timeline-date">{t.date}</span><div className="timeline-marker"/><div className="timeline-content"><h3>{t.name}</h3><p>{t.detail}</p></div></div>)}</div></section>
+  <section className="outside-section" id="outside"><div className="section-wrap"><div className="section-heading"><div><span className="eyebrow">THE OFFLINE PART</span><h2>Outside the<br/><em>screen.</em></h2></div><p>There is a whole life between browser tabs. This is a small window into it.</p></div><div className="interest-grid">{interests.map((it)=><article className="interest" key={it.title}><it.icon/><h3>{it.title}</h3><p>{it.text}</p></article>)}</div><div className="personal-strip"><div><span className="eyebrow">A FEW PERSONAL CONSTANTS</span><p>Lavender things. Green places. A book in the bag. Music for the ride. Usually one more question than I started with.</p></div><span className="personal-scribble">stay curious ✳</span></div></div></section>
+  <section className="notes-section section-wrap" id="notes"><div className="note-paper"><div className="note-top"><span className="eyebrow">A NOTE FROM THE MARGIN</span><span>NO. {String(notes.indexOf(randomNote)+1).padStart(2,'0')}</span></div><p className="note-quote">“{randomNote}”</p><button className="quiet-btn" onClick={()=>setRandomNote(n=>{let next=notes[Math.floor(Math.random()*notes.length)];return next===n?notes[(notes.indexOf(n)+1)%notes.length]:next})}><Sparkles/> Find another thought</button></div><div className="notes-side"><span className="eyebrow">NOTES TO MYSELF</span><h2>Small thoughts.<br/><em>Long detours.</em></h2><p>Little observations, ideas, things I read, questions I cannot quite shake, and thoughts that deserve more room than a social post.</p><p className="note-muted">This section will grow slowly, when there is something worth keeping.</p></div></section>
+  <section className="future-section"><div className="section-wrap future-inner"><span className="eyebrow">NOT THE LAST CHAPTER</span><h2>There is still so much<br/>I <em>haven't figured out.</em></h2><p>Research, new places, ideas, better tools, questions about AI and society, and the next thing that catches my attention. I like having room left on the page.</p><a href="#home" className="primary-btn">Start over, if you'd like <ArrowRight/></a></div></section>
+  <footer className="footer"><div className="footer-top"><div className="footer-brand">t.<span> A LIFE IN PROGRESS</span></div><div className="footer-message">Anyway, that's me.<br/><em>For now.</em></div><div className="footer-contact"><p>Have a book to recommend, a rabbit hole to share, or just feel like saying hello?</p><a href="mailto:taruntiwari1009@gmail.com">Write me a little note <ArrowUpRight/></a></div></div><div className="footer-bottom"><span>MADE WITH CURIOSITY · DELHI, INDIA</span><div><a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer">GitHub <ExternalLink/></a><button onClick={()=>setTextSize(s=>s>=2?0:s+1)} title="Adjust reading size">Aa · Text size</button><button onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}>Back to top ↑</button></div></div></footer>
+  <AnimatePresence>{selected&&<motion.div className="modal-scrim" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setSelected(null)}><motion.article className="project-modal" initial={{y:24,opacity:0}} animate={{y:0,opacity:1}} exit={{y:12,opacity:0}} onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setSelected(null)} aria-label="Close"><X/></button><span className="eyebrow">{selected.kind} · {selected.year}</span><h2>{selected.title}</h2><p className="modal-intro">{selected.intro}</p><div className="modal-story">{selected.story}</div><span className="eyebrow">TOOLS & METHODS</span><div className="tag-row modal-tags">{selected.stack.map(s=><span key={s}>{s}</span>)}</div><div className="lesson"><strong>What it left me with</strong><p>{selected.lesson}</p></div><button className="save-btn" onClick={()=>toggleSave(selected.id)}>{saved.includes(selected.id)?'Saved in your local collection ✓':'Save this project ♡'}</button><p className="modal-footnote">Saved items stay in this session for now.</p></motion.article></motion.div>}</AnimatePresence>
+  <AnimatePresence>{searchOpen&&<motion.div className="search-scrim" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setSearchOpen(false)}><motion.div className="search-panel" initial={{y:-20}} animate={{y:0}} onClick={e=>e.stopPropagation()}><div className="search-head"><Search/><input autoFocus value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search stories, projects, interests…"/><button onClick={()=>setSearchOpen(false)}><X/></button></div>{search&&<div className="search-results">{matches.length?matches.map(m=><a key={m.title} href={m.href} onClick={()=>setSearchOpen(false)}><strong>{m.title}</strong><span>{m.description}</span><ArrowUpRight/></a>):<p className="no-results">Nothing found yet. Try another word.</p>}</div>}<div className="search-hint">Search the little archive · Press ESC or click outside to close</div></motion.div></motion.div>}</AnimatePresence>
+ </main>;
 }
