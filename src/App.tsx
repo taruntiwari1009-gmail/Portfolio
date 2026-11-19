@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import type {LucideIcon} from 'lucide-react';
 import {AnimatePresence,motion} from 'framer-motion';
-import {ArrowDown,ArrowUpRight,Compass,BookOpen,Leaf,Music2,Heart,Code2,BriefcaseBusiness,Moon,Sun,Search,X,Code2} from 'lucide-react';
+import {ArrowDown,ArrowUpRight,Compass,BookOpen,Leaf,Music2,Heart,Code2,BriefcaseBusiness,Moon,Sun,Search,X} from 'lucide-react';
 const projects=[
 {title:'HCP Network Intelligence',label:'Healthcare · Network science',text:'I started looking at healthcare outreach not as isolated names in a spreadsheet, but as a network. Existing relationships between HCPs and KOLs could reveal new routes to connect—with network centrality helping identify useful bridges. A work project, described here at a high level.',takeaway:'A network can make the invisible relationships visible.',tags:'Network analysis · Centrality'},
 {title:'Clarity OS',label:'An idea for students',text:'Choosing a university or course can become a maze of tabs, rankings, contradictory advice and deadlines. Clarity OS is my experiment in making that decision feel less scattered—bringing discovery and research into one place so a student can compare with more confidence.',takeaway:'Build a tool that helps people think—not one that thinks for them.',tags:'Supabase · Search · AI'},
