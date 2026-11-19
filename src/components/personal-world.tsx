@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ArrowDown, ArrowUpRight, Asterisk, Menu, Moon, Play, SkipBack, SkipForward, Sun, X, BookOpen, Feather } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Asterisk, Menu, Moon, Sun, X, BookOpen, Feather } from "lucide-react";
+import { AmbientPlayer } from "@/components/ambient-player";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { WorldMap } from "@/components/world-map";
 import { books, journalEntries, projects } from "@/lib/world-content";
 import room from "@/assets/dusk-room.webp.asset.json";
-import cover from "@/assets/dusk-cover.webp.asset.json";
 import notebook from "@/assets/open-notebook.webp.asset.json";
 
 type Detail = { title: string; subtitle: string; body: string };
@@ -15,10 +15,6 @@ export function PersonalWorld() {
   const [night, setNight] = useState(false);
   const [menu, setMenu] = useState(false);
   const [detail, setDetail] = useState<Detail | null>(null);
-  const [track, setTrack] = useState(0);
-  const [musicNote, setMusicNote] = useState(false);
-  const tracks = [{ title: "The Nights", artist: "Avicii" }, { title: "Sunset Lover", artist: "Petit Biscuit" }, { title: "Bloom", artist: "The Paper Kites" }];
-  const song = tracks[track];
   return <main className={`personal-world ${night ? "ambient-night" : ""}`}>
     <section className="room-scene" aria-label="Tarun's room at dusk">
       <img className="room-art" src={room.url} alt="A warm wooden desk, books and moon lamp beside a window overlooking the city at sunset" fetchPriority="high" />
@@ -37,12 +33,7 @@ export function PersonalWorld() {
         <p className="intro-subtitle">A builder, reader, dreamer —<br/>trying to make sense of this beautiful chaos.</p>
         <div className="explore-row"><Button variant="scene" onClick={() => scrollTo('journal')}><Asterisk strokeWidth={1}/><span>Explore my world</span></Button><span className="decorative-line" /></div>
       </div>
-      <div className="music-player">
-        <img src={cover.url} alt="Dusk sky playlist artwork" />
-        <div className="music-info"><span>{song?.title}</span><small>{song?.artist}</small><div className="music-progress"><span/></div></div>
-        <div className="music-controls"><Button variant="quiet" size="icon" aria-label="Previous track" onClick={() => {setTrack((track + tracks.length - 1) % tracks.length); setMusicNote(false);}}><SkipBack/></Button><Button variant="quiet" size="icon" aria-label="Play selected track" onClick={() => setMusicNote(!musicNote)}><Play/></Button><Button variant="quiet" size="icon" aria-label="Next track" onClick={() => {setTrack((track + 1) % tracks.length); setMusicNote(false);}}><SkipForward/></Button></div>
-        {musicNote && <p className="music-note" role="status">A quiet moment. Audio hasn’t been added yet.</p>}
-      </div>
+      <AmbientPlayer />
       <Button variant="quiet" className="scroll-hint handwritten" onClick={() => scrollTo('journal')}>Scroll to explore<ArrowDown strokeWidth={1}/></Button>
     </section>
 
