@@ -75,7 +75,7 @@ export default function App() {
       </div>
       <div className="hero-art" aria-label="A little illustrated landscape">
         <div className="landscape"><div className="sun"/><div className="cloud cloud-one"/><div className="cloud cloud-two"/><div className="ridge ridge-back"/><div className="ridge ridge-front"/><div className="meadow"/><div className="flower flower-one"/><div className="flower flower-two"/><div className="flower flower-three"/></div>
-        <motion.button className="floating-note" whileHover={{ rotate: 0, scale: 1.04 }} initial={{rotate:4}} onClick={()=>setThought(pickDifferent(thought,thoughtList.length)} aria-label="Reveal a thought">
+        <motion.button className="floating-note" whileHover={{ rotate: 0, scale: 1.04 }} initial={{rotate:4}} onClick={()=>setThought(pickDifferent(thought,thoughtList.length))} aria-label="Reveal a thought">
           <span>NOTE TO SELF / RANDOM</span><p>{thought === -1 ? <>Keep asking.<br/>Keep making.<br/>Go outside<br/>once in a while.</> : thoughtList[thought]}</p><small>— T ✳</small>
         </motion.button>
         <motion.button className="curious-sticker" animate={{rotate:[7,11,7]}} transition={{duration:5,repeat:Infinity,ease:'easeInOut'}} onClick={()=>setPlaneMoved(v=>!v)}>curious<br/>by default ✳</motion.button>
