@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Application architecture
+- Keep the personal world as one continuous index page with in-page chapter navigation, because the requested experience explicitly scrolls through connected environments.
+- Store editable sample content in a browser-safe content module and keep generated room/notebook artwork independent from the interactive interface, so content and layout can evolve without regenerating images.
+- Use d3-geo with world-atlas for accurate map geometry and native interactive controls for destinations, rather than a remote embedded map.
+- The music controls are an audio-unavailable prototype; never animate playback or imply sound without an actual audio source.
