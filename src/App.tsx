@@ -1,26 +1,185 @@
 import { useState, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowRight, Github, Linkedin, Mail, Menu, X, Database, ShieldCheck, Workflow, Activity, ChevronRight } from 'lucide-react';
-const metrics=[['3+','Years in data & analytics','Across analytics, consulting and enterprise platforms'],['10M+','Records processed monthly','High-volume clinical data workloads'],['5,000+','Users supported','Enterprise reporting and analytics'],['99%','Data accuracy','Validation and quality focus'],['40+','Roles governed','Enterprise RBAC model'],['18+','Security groups','Impacted through platform optimization']];
-const experience: [string,string,string,string,string[]][]=[['Sanofi','Visier Functional Expert Lead','Mar 2026 — Present','Workforce intelligence, platform security, integration governance and operational readiness.',['Visier','Workday','RBAC','Governance','UAT','Hypercare']],['Deloitte Consulting India Pvt. Ltd.','Associate Analyst','Feb 2024 — Jan 2026','Enterprise reporting, analytics delivery, data quality and stakeholder solutions.',['SQL','Python','Power BI','Analytics','Data Quality']],['ProcDNA Analytics Pvt. Ltd.','Associate Analyst','Jul 2023 — Feb 2024','Clinical data engineering and pipeline automation across healthcare analytics.',['ETL','IICS','AWS','Databricks','Clinical Data']]];
-type Project = [string,string,string,string,string[],typeof ShieldCheck | typeof Activity | typeof Database | typeof Workflow];
-const projects: Project[]=[['01','ENTERPRISE PLATFORM','Workday–Visier Data Sync & Access Control','Connected workforce intelligence through integration, access governance, data validation, root cause analysis and UAT.',['Workday','Visier','Snowflake','SQL'],ShieldCheck],['02','FEATURED · NETWORK INTELLIGENCE','HCP Network Graph Analysis','Graph analytics to surface meaningful healthcare-professional connections and support outreach prioritization.',['Python','NetworkX','PostgreSQL','Centrality'],Activity],['03','DATA ENGINEERING','Clinical Data ETL Platform','Repeatable processing and quality checks for high-volume clinical datasets, handling 10M+ monthly records.',['Informatica IICS','SQL','PostgreSQL'],Database],['04','PERSONAL · IOT','Smart Cradle','Sensor-enabled prototype combining embedded hardware, message transport and cloud data.',['Raspberry Pi','ESP32','MQTT','Sensors'],Workflow]];
-const skills: [string,string[]][]=[['DATA ENGINEERING',['Python','SQL','ETL / ELT','PySpark','Informatica IICS','API Integration','Data Modeling']],['CLOUD & PLATFORMS',['Snowflake','Databricks','AWS','Azure Data Factory','Azure Data Lake']],['ANALYTICS & BI',['Power BI','Tableau','KPI Development','Dashboard Design','Reporting']],['WORKFORCE INTELLIGENCE',['Visier','Workday HCM','People Analytics','Workforce Analytics']],['GOVERNANCE & SECURITY',['RBAC','Data Governance','Data Security','Access Management']]];
-const cases=[['Workforce Analytics Transformation','Turning workforce data into decision-ready insights.'],['Enterprise RBAC & Security Governance','Aligning platform access with role, group and governance needs.'],['Reporting Automation Initiative','Reducing manual effort with repeatable analytics workflows.'],['Clinical Data Pipeline Modernization','Reliable processing for high-volume clinical datasets.']];
-const insights=['Building Trust in Workforce Analytics','Why Data Quality Matters More Than Dashboards','Governance at Scale','Snowflake vs Databricks','Workforce Analytics Beyond Reporting'];
-const Reveal=({children}:{children:ReactNode})=><motion.div initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:.5}}>{children}</motion.div>;
-function Head({eyebrow,title,sub}:{eyebrow:string;title:string;sub?:string}){return <div className="heading"><small>{eyebrow}</small><div><h2>{title}</h2>{sub&&<p>{sub}</p>}</div></div>}
-export default function App(){const [menu,setMenu]=useState(false),[open,setOpen]=useState(-1);return <main>
-<nav className="nav"><a href="#home" className="brand"><b>TT</b><span>Tarun Tiwari<small>DATA & ANALYTICS ENGINEER</small></span></a><div className={menu?'links show':'links'}>{['Impact','Experience','Projects','Case studies','Skills','Insights'].map((v,i)=><a href={['#impact','#experience','#projects','#cases','#skills','#insights'][i]} onClick={()=>setMenu(false)} key={v}>{v}</a>)}</div><a className="navcta" href="#contact">Let's connect <ArrowUpRight/></a><button className="menubtn" onClick={()=>setMenu(!menu)} aria-label="Toggle navigation">{menu?<X/>:<Menu/>}</button></nav>
-<section className="hero" id="home"><div className="hero-grid"/><div className="glow"/><div className="hero-left"><small className="status"><i/> DATA · ANALYTICS · ENTERPRISE SYSTEMS</small><h1>Building trusted<br/><em>enterprise intelligence</em><br/>systems.</h1><p>Transforming enterprise and workforce data into trusted business decisions through engineering, analytics, governance and platform thinking.</p><div className="actions"><a className="primary" href="#projects">View my work <ArrowRight/></a><a className="secondary" href="#contact">Connect <ArrowUpRight/></a></div><div className="hero-foot"><span>DELHI, INDIA</span><span>SCROLL TO EXPLORE ↓</span></div></div><div className="visual"><div className="ring r1"/><div className="ring r2"/><div className="core">DATA<span>↗</span></div><div className="float a"><Database/> DATA PIPELINES</div><div className="float b"><ShieldCheck/> GOVERNANCE</div><div className="float c"><Activity/> INTELLIGENCE</div><small className="visualfoot">SYSTEMS · SIGNAL · IMPACT</small></div></section>
-<section id="impact" className="impact"><div className="wrap"><Head eyebrow="01 / ENTERPRISE IMPACT" title="Outcomes before tools." sub="A snapshot of scale, reliability and platform responsibilities across my work."/><div className="metrics">{metrics.map((m,i)=><Reveal key={m[0]}><article className="metric"><small>0{i+1}</small><strong>{m[0]}</strong><b>{m[1]}</b><p>{m[2]}</p></article></Reveal>)}</div><p className="note">Metrics are portfolio summary figures. Please verify against approved source material before publishing.</p></div></section>
-<section className="about"><div className="wrap"><Head eyebrow="02 / THE STORY" title="From data workflows to enterprise intelligence."/><div className="split"><h3>I connect the dots between <em>data, systems</em> and the people who depend on them.</h3><div className="copy"><p>My journey started with data engineering and clinical analytics, where I learned to make complex data workflows reliable and useful.</p><p>At Deloitte, I expanded into enterprise reporting and analytics—working closer to business questions, stakeholder needs and decision-making.</p><p>Today, I work around workforce intelligence and enterprise platforms, with a focus on integrations, governance, security models and operational ownership.</p><div className="journey">{experience.map((e,i)=><div key={e[0]}><i>0{i+1}</i><span>{e[0]}<small>{['Data engineering & clinical analytics','Enterprise reporting & analytics','Workforce intelligence & platform ownership'][i]}</small></span></div>)}</div></div></div></div></section>
-<section className="exp" id="experience"><div className="wrap"><Head eyebrow="03 / EXPERIENCE" title="Experience, built in layers." sub="A progression across data foundations, analytics delivery and enterprise platform responsibility."/><div className="timeline">{experience.map((e,i)=><Reveal key={e[0]}><article><small>0{i+1}</small><div><h3>{e[0]}</h3><b>{e[1]}</b><p>{e[3]}</p><div className="tags">{e[4].map(t=><span key={t}>{t}</span>)}</div></div><time>{e[2]}</time></article></Reveal>)}</div></div></section>
-<section id="projects" className="projects"><div className="wrap"><Head eyebrow="04 / FEATURED WORK" title="Systems with a purpose." sub="Projects across enterprise platforms, network analytics and data engineering."/><div className="projectgrid">{projects.map(p=>{const Icon=p[5];return <Reveal key={p[0]}><article><header><small>{p[0]} / {p[1]}</small><Icon/></header><div className="projecticon"><Icon/></div><h3>{p[2]}</h3><p>{p[3]}</p><div className="tags">{p[4].map(t=><span key={t}>{t}</span>)}</div><a href="#contact"><ArrowUpRight/></a></article></Reveal>})}</div></div></section>
-<section className="cases" id="cases"><div className="wrap"><Head eyebrow="05 / CASE STUDIES" title="The problem is the starting point." sub="Consulting-style explorations of challenges behind data and enterprise work."/><div className="caselist">{cases.map((c,i)=><button key={c[0]} onClick={()=>setOpen(open===i?-1:i)}><small>0{i+1}</small><div><h3>{c[0]}</h3><p>{c[1]}</p>{open===i&&<p className="extra">Detailed public-safe case study is being developed. Architecture, approach, lessons and outcomes will be documented without confidential client information.</p>}</div><ChevronRight className={open===i?'rotate':''}/></button>)}</div></div></section>
-<section className="skills" id="skills"><div className="wrap"><Head eyebrow="06 / CAPABILITIES" title="Tools are the means. Systems thinking is the skill."/><div className="skillgrid">{skills.map(s=><article key={s[0]}><small>{s[0]}</small><div>{s[1].map(t=><span key={t}>{t}</span>)}</div></article>)}</div></div></section>
-<section className="insights" id="insights"><div className="wrap"><Head eyebrow="07 / NOTES & INSIGHTS" title="Ideas I keep exploring." sub="Themes across data, platforms, governance and decision systems."/><div className="insightlist">{insights.map((v,i)=><article key={v}><small>0{i+1}</small><b>{v}</b><span>TOPIC</span></article>)}</div></div></section>
-<section className="education"><div className="wrap"><Head eyebrow="08 / BEYOND WORK" title="Learning never stays in one lane."/><div className="edugrid"><article><small>EDUCATION</small><h3>Master of Computer Applications (MCA)</h3><p>Indian Institute of Technology Patna · Currently pursuing</p><hr/><h3>Bachelor of Computer Applications (BCA)</h3><p>Vivekananda Institute of Professional Studies (VIPS), GGSIPU · 2020–2023 · CGPA 8.6</p></article><article><small>RESEARCH & COMMUNITY</small><h3>Explainable AI</h3><p>Research interest in interpretability, trustworthy AI and responsible systems.</p><hr/><h3>Volunteering</h3><p>PetFed India · India AI Summit</p><hr/><h3>Outside the terminal</h3><p>Books, sports, volunteering, travel and discovering greener places.</p></article></div></div></section>
-<section className="resume"><div className="wrap"><div><small>09 / RESUME</small><h2>A concise version<br/>of the journey.</h2><p>Want the full professional overview? Reach out and I’ll share the latest resume.</p></div><a className="primary" href="mailto:taruntiwari1009@gmail.com?subject=Resume%20request">Request resume <ArrowUpRight/></a></div></section>
-<footer id="contact"><div className="wrap"><small>10 / CONTACT</small><h2>Let’s build something<br/><em>that matters.</em></h2><p>For opportunities, collaboration, consulting or a good conversation about data and technology.</p><a className="email" href="mailto:taruntiwari1009@gmail.com">taruntiwari1009@gmail.com <ArrowUpRight/></a><div className="foot"><span>© 2026 TARUN TIWARI · DATA & ANALYTICS ENGINEER</span><div><a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer"><Github/></a><a href="https://www.linkedin.com/in/taruntiwari1009/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin/></a><a href="mailto:taruntiwari1009@gmail.com"><Mail/></a></div><a href="#home">BACK TO TOP ↑</a></div></div></footer>
-</main>}
+import { ArrowUpRight, Github, Menu, X, BookOpen, Network, Database, Layers3, Sparkles } from 'lucide-react';
+
+const experience = [
+  { company: 'Sanofi', role: 'Visier Functional Expert Lead', date: 'Mar 2026 — Present', detail: 'Supporting Visier workforce intelligence—security models, Workday integrations, access governance, implementation changes and go-live readiness.' },
+  { company: 'Deloitte Consulting India', role: 'Associate Analyst', date: 'Feb 2024 — Jan 2026', detail: 'Consulting and analytics work across enterprise data, reporting and pharma-related data workflows.' },
+  { company: 'ProcDNA Analytics', role: 'Associate Analyst', date: 'Jul 2023 — Feb 2024', detail: 'Worked on pharma data and analytics; built a network-based trigger concept using HCP and KOL relationships to help identify new connections.' }
+];
+
+const projects = [
+  { title: 'HCP Network Intelligence', category: 'NETWORK SCIENCE · HEALTHCARE', text: 'A network-based approach to help medical representatives identify relevant healthcare professionals through existing HCP and KOL relationships.', tech: 'Graph analytics · Network centrality · Python', icon: Network },
+  { title: 'Clinical Data Workflows', category: 'DATA · AUTOMATION', text: 'Automation and transformation of manual data workflows for pharma use cases, focused on repeatability and more reliable delivery.', tech: 'ETL · IICS · Data pipelines', icon: Database },
+  { title: 'Smart Cradle', category: 'IOT · HARDWARE', text: 'A prototype built around connected sensors and embedded devices, using messaging and a database to monitor cradle conditions.', tech: 'Raspberry Pi · ESP32 · MQTT', icon: Layers3 },
+  { title: 'Clarity OS', category: 'PRODUCT · LEARNING', text: 'An exploration into helping students compare universities and courses with information gathered into a more useful decision-making experience.', tech: 'Supabase · APIs · AI', icon: Sparkles }
+];
+
+const interests = [
+  ['Books & reading', 'I like finding new perspectives through books, authors and conversations about ideas.'],
+  ['History & society', 'Curiosity that stretches beyond technology—history, public policy and how institutions shape everyday life.'],
+  ['Sports', 'Cricket, football, chess, badminton, racing and the occasional running event.'],
+  ['Travel & outdoors', 'New places, solo travel plans and a preference for greenery over concrete.'],
+  ['Volunteering', 'Helping out at community, cultural, sporting and technology events whenever I can.']
+];
+
+const research = [
+  'Explainable AI & model transparency',
+  'Network science & graph-based systems',
+  'Responsible data, bias & governance',
+  'Technology, people & society'
+];
+
+const Fade = ({ children, delay = 0 }: { children: ReactNode; delay?: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 18 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.45, delay }}
+  >
+    {children}
+  </motion.div>
+);
+
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const nav = [['About', '#about'], ['Experience', '#experience'], ['Projects', '#work'], ['Interests', '#life']];
+
+  return (
+    <main id="top">
+      <header className="site-header">
+        <a className="brand" href="#top">Tarun Tiwari<span>PERSONAL WEBSITE</span></a>
+        <nav className={menuOpen ? 'nav open' : 'nav'}>
+          {nav.map(([name, href]) => (
+            <a key={name} href={href} onClick={() => setMenuOpen(false)}>{name}</a>
+          ))}
+        </nav>
+        <a className="contact-pill" href="#contact">Say hello <ArrowUpRight size={15} /></a>
+        <button className="menu-button" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+      </header>
+
+      <section className="hero">
+        <div className="hero-inner">
+          <div className="hero-kicker"><span /> DELHI, INDIA · DATA & TECHNOLOGY</div>
+          <h1>Hello, I'm Tarun.<br /><em>I like figuring<br className="mobile-break" /> things out.</em></h1>
+          <p className="hero-description">A technology and data professional, curious reader, researcher-in-progress and someone who enjoys connecting ideas that don't always sit in the same room.</p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#about">Get to know me <ArrowUpRight size={16} /></a>
+            <a className="simple-link" href="#work">Things I've built ↓</a>
+          </div>
+          <div className="hero-aside"><span>01 / A BIT ABOUT ME</span><span>DATA · PEOPLE · IDEAS · CURIOSITY</span></div>
+        </div>
+        <div className="hero-side" aria-hidden="true">
+          <div className="side-paper">
+            <span>NOTES FROM A CURIOUS MIND</span>
+            <div className="scribble">t.</div>
+            <div className="paper-rule" />
+            <p>Observe.<br />Question.<br />Build something.</p>
+            <small>EST. 2001 · NEW DELHI</small>
+          </div>
+          <div className="floating-note">Currently exploring <b>AI × society</b></div>
+        </div>
+      </section>
+
+      <section className="about section" id="about">
+        <div className="section-top"><span>01</span><p>THE PERSON BEHIND THE PAGE</p></div>
+        <div className="about-grid">
+          <h2>Work is a part<br />of my story.<br /><em>Not all of it.</em></h2>
+          <div className="about-copy">
+            <p>I started out studying computer applications, learning the fundamentals of programming, databases, systems and AI. Since graduating, I've worked across analytics, consulting and data-focused roles in healthcare and enterprise environments.</p>
+            <p>Along the way, I became interested in more than just making systems work. I want to understand <strong>why</strong> they work, who they affect, where they fail, and how we can build them better.</p>
+            <p>That curiosity keeps pulling me toward research—particularly explainable AI, network science and the questions that connect technology with people.</p>
+          </div>
+        </div>
+        <div className="about-facts">
+          <div><span>EDUCATION</span><strong>BCA · 2023</strong><small>Guru Gobind Singh Indraprastha University</small></div>
+          <div><span>WORK SO FAR</span><strong>Analytics → Consulting → Data & Systems</strong><small>Healthcare, enterprise data and workforce intelligence</small></div>
+          <div><span>WHAT I'M WORKING TOWARD</span><strong>Research & deeper technical work</strong><small>Building toward long-term research ambitions</small></div>
+        </div>
+      </section>
+
+      <section className="work section" id="work">
+        <div className="section-top"><span>02</span><p>PROJECTS & EXPERIENCES</p></div>
+        <div className="section-heading"><h2>Things I've worked on.</h2><p>Some professional. Some personal. All shaped by curiosity and the urge to make an idea tangible.</p></div>
+        <div className="projects">
+          {projects.map((project, index) => {
+            const Icon = project.icon;
+            return (
+              <Fade delay={index * 0.04} key={project.title}>
+                <article className="project">
+                  <div className="project-icon"><Icon strokeWidth={1.5} /></div>
+                  <div className="project-content">
+                    <small>{project.category}</small>
+                    <h3>{project.title}</h3>
+                    <p>{project.text}</p>
+                    <div className="project-tech">{project.tech}</div>
+                  </div>
+                  <span className="project-number">0{index + 1}</span>
+                </article>
+              </Fade>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="experience section" id="experience">
+        <div className="section-top"><span>03</span><p>WHERE I'VE BEEN</p></div>
+        <div className="section-heading"><h2>A timeline, not a title list.</h2><p>Learning in different teams, domains and problem spaces.</p></div>
+        <div className="timeline">
+          {experience.map((item, index) => (
+            <Fade delay={index * 0.05} key={item.company}>
+              <article>
+                <div className="timeline-date">{item.date}</div>
+                <div><h3>{item.company}</h3><b>{item.role}</b><p>{item.detail}</p></div>
+              </article>
+            </Fade>
+          ))}
+        </div>
+      </section>
+
+      <section className="research section" id="research">
+        <div className="section-top"><span>04</span><p>QUESTIONS I KEEP COMING BACK TO</p></div>
+        <div className="research-grid">
+          <h2>Curiosity doesn't<br />stay in one lane.</h2>
+          <div className="research-content">
+            <p>I'm interested in the overlap between computation, human decisions and the systems we build around them. These are areas I read about, explore and hope to investigate more seriously.</p>
+            <div className="topic-list">
+              {research.map((topic, index) => (
+                <div key={topic}><span>0{index + 1}</span><strong>{topic}</strong></div>
+              ))}
+            </div>
+            <div className="reading-note"><BookOpen size={18} /><span>On my reading list: AI · networks · history · human behaviour · systems</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="life section" id="life">
+        <div className="section-top"><span>05</span><p>WHEN I'M NOT WORKING</p></div>
+        <div className="life-grid">
+          <h2>Life outside<br />the laptop.</h2>
+          <div className="interest-grid">
+            {interests.map(([title, description], index) => (
+              <article key={title}>
+                <span>0{index + 1}</span><h3>{title}</h3><p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="contact section" id="contact">
+        <div className="section-top"><span>06</span><p>LET'S CONNECT</p></div>
+        <h2>Good ideas can start<br />with a <em>hello.</em></h2>
+        <p>Open to thoughtful conversations, interesting collaborations, research, and meeting people who are curious about the world.</p>
+        <a className="email-link" href="mailto:taruntiwari1009@gmail.com">taruntiwari1009@gmail.com <ArrowUpRight /></a>
+        <div className="footer-bottom">
+          <span>© 2026 · TARUN TIWARI · MADE WITH CURIOSITY</span>
+          <div className="social"><a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer"><Github size={18} /> GitHub</a></div>
+          <a href="#top">Back to top ↑</a>
+        </div>
+      </section>
+    </main>
+  );
+}
