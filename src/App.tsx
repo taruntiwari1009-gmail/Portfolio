@@ -7,12 +7,14 @@ const experience = [
   { company: 'Deloitte Consulting India', role: 'Associate Analyst', date: 'Feb 2024 — Jan 2026', detail: 'Consulting and analytics work across enterprise data, reporting and pharma-related data workflows.' },
   { company: 'ProcDNA Analytics', role: 'Associate Analyst', date: 'Jul 2023 — Feb 2024', detail: 'Worked on pharma data and analytics; built a network-based trigger concept using HCP and KOL relationships to help identify new connections.' }
 ];
+
 const projects = [
   { title: 'HCP Network Intelligence', category: 'NETWORK SCIENCE · HEALTHCARE', text: 'A network-based approach to help medical representatives identify relevant healthcare professionals through existing HCP and KOL relationships.', tech: 'Graph analytics · Network centrality · Python', icon: Network },
   { title: 'Clinical Data Workflows', category: 'DATA · AUTOMATION', text: 'Automation and transformation of manual data workflows for pharma use cases, focused on repeatability and more reliable delivery.', tech: 'ETL · IICS · Data pipelines', icon: Database },
   { title: 'Smart Cradle', category: 'IOT · HARDWARE', text: 'A prototype built around connected sensors and embedded devices, using messaging and a database to monitor cradle conditions.', tech: 'Raspberry Pi · ESP32 · MQTT', icon: Layers3 },
   { title: 'Clarity OS', category: 'PRODUCT · LEARNING', text: 'An exploration into helping students compare universities and courses with information gathered into a more useful decision-making experience.', tech: 'Supabase · APIs · AI', icon: Sparkles }
 ];
+
 const interests = [
   ['Books & reading', 'I like finding new perspectives through books, authors and conversations about ideas.'],
   ['History & society', 'Curiosity that stretches beyond technology—history, public policy and how institutions shape everyday life.'],
@@ -20,27 +22,164 @@ const interests = [
   ['Travel & outdoors', 'New places, solo travel plans and a preference for greenery over concrete.'],
   ['Volunteering', 'Helping out at community, cultural, sporting and technology events whenever I can.']
 ];
-const research = ['Explainable AI & model transparency', 'Network science & graph-based systems', 'Responsible data, bias & governance', 'Technology, people & society'];
-const Fade = ({children, delay=0}:{children:ReactNode;delay?:number}) => <motion.div initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-40px'}} transition={{duration:.45,delay}}>{children}</motion.div>;
+
+const research = [
+  'Explainable AI & model transparency',
+  'Network science & graph-based systems',
+  'Responsible data, bias & governance',
+  'Technology, people & society'
+];
+
+const Fade = ({ children, delay = 0 }: { children: ReactNode; delay?: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 18 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.45, delay }}
+  >
+    {children}
+  </motion.div>
+);
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const nav = [['About','#about'],['Experience','#experience'],['Projects','#work'],['Interests','#life']];
-  return <main id="top">
-    <header className="site-header"><a className="brand" href="#top">Tarun Tiwari<span>PERSONAL WEBSITE</span></a><nav className={menuOpen?'nav open':'nav'}>{nav.map(([n,h])=><a key={n} href={h} onClick={()=>setMenuOpen(false)}>{n}</a>)}</nav><a className="contact-pill" href="#contact">Say hello <ArrowUpRight size={15}/></a><button className="menu-button" aria-label="Toggle navigation" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button></header>
-    <section className="hero">
-      <div className="hero-inner"><div className="hero-kicker"><span/> DELHI, INDIA · DATA & TECHNOLOGY</div>
-        <h1>Hello, I'm Tarun.<br/><em>I like figuring<br className="mobile-break"/> things out.</em></h1>
-        <p className="hero-description">A technology and data professional, curious reader, researcher-in-progress and someone who enjoys connecting ideas that don't always sit in the same room.</p>
-        <div className="hero-actions"><a className="primary-button" href="#about">Get to know me <ArrowUpRight size={16}/></a><a className="simple-link" href="#work">Things I've built ↓</a></div>
-        <div className="hero-aside"><span>01 / A BIT ABOUT ME</span><span>DATA · PEOPLE · IDEAS · CURIOSITY</span></div>
-      </div>
-      <div className="hero-side" aria-hidden="true"><div className="side-paper"><span>NOTES FROM A CURIOUS MIND</span><div className="scribble">t.</div><div className="paper-rule"/><p>Observe.<br/>Question.<br/>Build something.</p><small>EST. 2001 · NEW DELHI</small></div><div className="floating-note">Currently exploring <b>AI × society</b></div></div>
-    </section>
-    <section className="about section" id="about"><div className="section-top"><span>01</span><p>THE PERSON BEHIND THE PAGE</p></div><div className="about-grid"><h2>Work is a part<br/>of my story.<br/><em>Not all of it.</em></h2><div className="about-copy"><p>I started out studying computer applications, learning the fundamentals of programming, databases, systems and AI. Since graduating, I've worked across analytics, consulting and data-focused roles in healthcare and enterprise environments.</p><p>Along the way, I became interested in more than just making systems work. I want to understand <strong>why</strong> they work, who they affect, where they fail, and how we can build them better.</p><p>That curiosity keeps pulling me toward research—particularly explainable AI, network science and the questions that connect technology with people.</p></div></div><div className="about-facts"><div><span>EDUCATION</span><strong>BCA · 2023</strong><small>Guru Gobind Singh Indraprastha University</small></div><div><span>WORK SO FAR</span><strong>Analytics → Consulting → Data & Systems</strong><small>Healthcare, enterprise data and workforce intelligence</small></div><div><span>WHAT I'M WORKING TOWARD</span><strong>Research & deeper technical work</strong><small>Building toward long-term research ambitions</small></div></div></section>
-    <section className="work section" id="work"><div className="section-top"><span>02</span><p>PROJECTS & EXPERIENCES</p></div><div className="section-heading"><h2>Things I've worked on.</h2><p>Some professional. Some personal. All shaped by curiosity and the urge to make an idea tangible.</p></div><div className="projects">{projects.map((p,i) => { const Icon = p.icon; return (<Fade delay={i*.04} key={p.title}><article className="project"><div className="project-icon"><Icon strokeWidth={1.5}/></div><div className="project-content"><small>{p.category}</small><h3>{p.title}</h3><p>{p.text}</p><div className="project-tech">{p.tech}</div></div><span className="project-number">0{i+1}</span></article></Fade>); })}</div></section>
-    <section className="experience section" id="experience"><div className="section-top"><span>03</span><p>WHERE I'VE BEEN</p></div><div className="section-heading"><h2>A timeline, not a title list.</h2><p>Learning in different teams, domains and problem spaces.</p></div><div className="timeline">{experience.map((e,i)=><Fade delay={i*.05} key={e.company}><article><div className="timeline-date">{e.date}</div><div><h3>{e.company}</h3><b>{e.role}</b><p>{e.detail}</p></div></article></Fade>)}</div></section>
-    <section className="research section" id="research"><div className="section-top"><span>04</span><p>QUESTIONS I KEEP COMING BACK TO</p></div><div className="research-grid"><h2>Curiosity doesn't<br/>stay in one lane.</h2><div className="research-content"><p>I'm interested in the overlap between computation, human decisions and the systems we build around them. These are areas I read about, explore and hope to investigate more seriously.</p><div className="topic-list">{research.map((r,i) => (<div key={r}><span>0{i+1}</span><strong>{r}</strong></div>))}</div><div className="reading-note"><BookOpen size={18}/><span>On my reading list: AI · networks · history · human behaviour · systems</span></div></div></section>
-    <section className="life section" id="life"><div className="section-top"><span>05</span><p>WHEN I'M NOT WORKING</p></div><div className="life-grid"><h2>Life outside<br/>the laptop.</h2><div className="interest-grid">{interests.map(([title,desc],i) => (<article key={title}><span>0{i+1}</span><h3>{title}</h3><p>{desc}</p></article>))}</div></div></section>
-    <section className="contact section" id="contact"><div className="section-top"><span>06</span><p>LET'S CONNECT</p></div><h2>Good ideas can start<br/>with a <em>hello.</em></h2><p>Open to thoughtful conversations, interesting collaborations, research, and meeting people who are curious about the world.</p><a className="email-link" href="mailto:taruntiwari1009@gmail.com">taruntiwari1009@gmail.com <ArrowUpRight/></a><div className="footer-bottom"><span>© 2026 · TARUN TIWARI · MADE WITH CURIOSITY</span><div className="social"><a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer"><Github size={18}/> GitHub</a></div><a href="#top">Back to top ↑</a></div></section>
-  </main>;
+  const nav = [['About', '#about'], ['Experience', '#experience'], ['Projects', '#work'], ['Interests', '#life']];
+
+  return (
+    <main id="top">
+      <header className="site-header">
+        <a className="brand" href="#top">Tarun Tiwari<span>PERSONAL WEBSITE</span></a>
+        <nav className={menuOpen ? 'nav open' : 'nav'}>
+          {nav.map(([name, href]) => (
+            <a key={name} href={href} onClick={() => setMenuOpen(false)}>{name}</a>
+          ))}
+        </nav>
+        <a className="contact-pill" href="#contact">Say hello <ArrowUpRight size={15} /></a>
+        <button className="menu-button" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+      </header>
+
+      <section className="hero">
+        <div className="hero-inner">
+          <div className="hero-kicker"><span /> DELHI, INDIA · DATA & TECHNOLOGY</div>
+          <h1>Hello, I'm Tarun.<br /><em>I like figuring<br className="mobile-break" /> things out.</em></h1>
+          <p className="hero-description">A technology and data professional, curious reader, researcher-in-progress and someone who enjoys connecting ideas that don't always sit in the same room.</p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#about">Get to know me <ArrowUpRight size={16} /></a>
+            <a className="simple-link" href="#work">Things I've built ↓</a>
+          </div>
+          <div className="hero-aside"><span>01 / A BIT ABOUT ME</span><span>DATA · PEOPLE · IDEAS · CURIOSITY</span></div>
+        </div>
+        <div className="hero-side" aria-hidden="true">
+          <div className="side-paper">
+            <span>NOTES FROM A CURIOUS MIND</span>
+            <div className="scribble">t.</div>
+            <div className="paper-rule" />
+            <p>Observe.<br />Question.<br />Build something.</p>
+            <small>EST. 2001 · NEW DELHI</small>
+          </div>
+          <div className="floating-note">Currently exploring <b>AI × society</b></div>
+        </div>
+      </section>
+
+      <section className="about section" id="about">
+        <div className="section-top"><span>01</span><p>THE PERSON BEHIND THE PAGE</p></div>
+        <div className="about-grid">
+          <h2>Work is a part<br />of my story.<br /><em>Not all of it.</em></h2>
+          <div className="about-copy">
+            <p>I started out studying computer applications, learning the fundamentals of programming, databases, systems and AI. Since graduating, I've worked across analytics, consulting and data-focused roles in healthcare and enterprise environments.</p>
+            <p>Along the way, I became interested in more than just making systems work. I want to understand <strong>why</strong> they work, who they affect, where they fail, and how we can build them better.</p>
+            <p>That curiosity keeps pulling me toward research—particularly explainable AI, network science and the questions that connect technology with people.</p>
+          </div>
+        </div>
+        <div className="about-facts">
+          <div><span>EDUCATION</span><strong>BCA · 2023</strong><small>Guru Gobind Singh Indraprastha University</small></div>
+          <div><span>WORK SO FAR</span><strong>Analytics → Consulting → Data & Systems</strong><small>Healthcare, enterprise data and workforce intelligence</small></div>
+          <div><span>WHAT I'M WORKING TOWARD</span><strong>Research & deeper technical work</strong><small>Building toward long-term research ambitions</small></div>
+        </div>
+      </section>
+
+      <section className="work section" id="work">
+        <div className="section-top"><span>02</span><p>PROJECTS & EXPERIENCES</p></div>
+        <div className="section-heading"><h2>Things I've worked on.</h2><p>Some professional. Some personal. All shaped by curiosity and the urge to make an idea tangible.</p></div>
+        <div className="projects">
+          {projects.map((project, index) => {
+            const Icon = project.icon;
+            return (
+              <Fade delay={index * 0.04} key={project.title}>
+                <article className="project">
+                  <div className="project-icon"><Icon strokeWidth={1.5} /></div>
+                  <div className="project-content">
+                    <small>{project.category}</small>
+                    <h3>{project.title}</h3>
+                    <p>{project.text}</p>
+                    <div className="project-tech">{project.tech}</div>
+                  </div>
+                  <span className="project-number">0{index + 1}</span>
+                </article>
+              </Fade>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="experience section" id="experience">
+        <div className="section-top"><span>03</span><p>WHERE I'VE BEEN</p></div>
+        <div className="section-heading"><h2>A timeline, not a title list.</h2><p>Learning in different teams, domains and problem spaces.</p></div>
+        <div className="timeline">
+          {experience.map((item, index) => (
+            <Fade delay={index * 0.05} key={item.company}>
+              <article>
+                <div className="timeline-date">{item.date}</div>
+                <div><h3>{item.company}</h3><b>{item.role}</b><p>{item.detail}</p></div>
+              </article>
+            </Fade>
+          ))}
+        </div>
+      </section>
+
+      <section className="research section" id="research">
+        <div className="section-top"><span>04</span><p>QUESTIONS I KEEP COMING BACK TO</p></div>
+        <div className="research-grid">
+          <h2>Curiosity doesn't<br />stay in one lane.</h2>
+          <div className="research-content">
+            <p>I'm interested in the overlap between computation, human decisions and the systems we build around them. These are areas I read about, explore and hope to investigate more seriously.</p>
+            <div className="topic-list">
+              {research.map((topic, index) => (
+                <div key={topic}><span>0{index + 1}</span><strong>{topic}</strong></div>
+              ))}
+            </div>
+            <div className="reading-note"><BookOpen size={18} /><span>On my reading list: AI · networks · history · human behaviour · systems</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="life section" id="life">
+        <div className="section-top"><span>05</span><p>WHEN I'M NOT WORKING</p></div>
+        <div className="life-grid">
+          <h2>Life outside<br />the laptop.</h2>
+          <div className="interest-grid">
+            {interests.map(([title, description], index) => (
+              <article key={title}>
+                <span>0{index + 1}</span><h3>{title}</h3><p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="contact section" id="contact">
+        <div className="section-top"><span>06</span><p>LET'S CONNECT</p></div>
+        <h2>Good ideas can start<br />with a <em>hello.</em></h2>
+        <p>Open to thoughtful conversations, interesting collaborations, research, and meeting people who are curious about the world.</p>
+        <a className="email-link" href="mailto:taruntiwari1009@gmail.com">taruntiwari1009@gmail.com <ArrowUpRight /></a>
+        <div className="footer-bottom">
+          <span>© 2026 · TARUN TIWARI · MADE WITH CURIOSITY</span>
+          <div className="social"><a href="https://github.com/taruntiwari1009-gmail" target="_blank" rel="noreferrer"><Github size={18} /> GitHub</a></div>
+          <a href="#top">Back to top ↑</a>
+        </div>
+      </section>
+    </main>
+  );
 }
