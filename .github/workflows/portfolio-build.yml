@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [redesign/life-in-progress]
+    branches: [redesign/life-in-progress, redesign/personal-collage-v3, redesign/story-walkthrough]
 jobs:
   build:
     runs-on: ubuntu-latest
